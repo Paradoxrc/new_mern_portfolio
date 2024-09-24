@@ -160,6 +160,5 @@ module.exports ={
     Project: mongoose.model("projects", projectSchema),
     Education: mongoose.model("educations", educationSchema),
     Experience: mongoose.model("experiences", experienceSchema),
-    DarkTheme: mongoose.model("darkthemes",darkThemeSchema),
-   LightTheme: mongoose.model("lightthemes",lightThemeSchema),
+ 
 } 

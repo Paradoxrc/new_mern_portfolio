@@ -10,6 +10,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import ExperienceCard from '../Cards/ExperienceCard';
 // import { experiences } from '../../data/constants';
 import { useSelector } from 'react-redux';
+import { Zoom } from 'react-awesome-reveal';
 
 const Container = styled.div`
     display: flex;
@@ -87,10 +88,12 @@ const experiences = portfolioData.experience;
     return (
         <Container id="experience">
             <Wrapper>
+                <Zoom>
                 <Title>Experience</Title>
                 <Desc>
                     My work experience as a software engineer and working on different companies and projects.
                 </Desc>
+                </Zoom>
                 <TimelineSection>
                     <Timeline>
                         {experiences.map((experience,index) => (

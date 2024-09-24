@@ -147,6 +147,7 @@ function Footer() {
           <NavLink href="#experience">Experience</NavLink>
           <NavLink href="#projects">Projects</NavLink>
           <NavLink href="#education">Education</NavLink>
+          <NavLink href="#articles">Articles</NavLink>
         </Nav>
 
         <Copyright>

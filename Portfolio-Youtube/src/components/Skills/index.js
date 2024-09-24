@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 //import { skills } from '../../data/constants'
 import { useSelector } from 'react-redux'
+import { Zoom } from 'react-awesome-reveal';
 
 const Container = styled.div`
 display: flex;
@@ -132,9 +133,11 @@ const Skills = () => {
 
   return (
     <Container id="skills">
+      
       <Wrapper>
+      <Zoom>
         <Title>Skills</Title>
-        <Desc>Here are some of my skills on which I have been working for the past 2 years.</Desc>
+        <Desc>Here are some of my skills on which I have been working for the past 2 years.</Desc></Zoom>
         <SkillsContainer>
           {skills.map((skill) => (
             <Skill key={skill.id}> {/* Use a unique key for each skill */}

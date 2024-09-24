@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {Intro,Skill,Project,Education,Experience,LightTheme,DarkTheme} = require("../models/portfolioModel");
+const {Intro,Skill,Project,Education,Experience} = require("../models/portfolioModel");
 
 
 
@@ -12,8 +12,7 @@ router.get("/get-portfolio-data", async (req, res) => {
         const projects = await Project.find();
         const educations = await Education.find();
         const experiences = await Experience.find();
-        const lightthemes=await LightTheme.find();
-        const darkthemes=await DarkTheme.find();
+     
 
         res.status(200).send({
             intro:intros[0],
@@ -21,8 +20,7 @@ router.get("/get-portfolio-data", async (req, res) => {
             project:projects,
             education:educations,
             experience:experiences,
-            lighttheme:lightthemes,
-            darktheme:darkthemes,
+            
         })
 
     } catch (error) {

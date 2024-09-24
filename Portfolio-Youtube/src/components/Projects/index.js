@@ -4,6 +4,7 @@ import { Container, Wrapper, Title, Desc, CardContainer, ToggleButtonGroup, Togg
 import ProjectCard from '../Cards/ProjectCards'
 //import { projects } from '../../data/constants'
 import { useSelector } from 'react-redux'
+import { Zoom } from 'react-awesome-reveal';
 
 
 const Projects = ({openModal,setOpenModal}) => {
@@ -22,10 +23,12 @@ const projects = portfolioData.project;
   return (
     <Container id="projects">
       <Wrapper>
+        <Zoom>
         <Title>Projects</Title>
         <Desc>
           I have worked on a wide range of projects. From web apps to android apps. Here are some of my projects.
         </Desc>
+        </Zoom>
         <ToggleButtonGroup >
           {toggle === 'all' ?
             <ToggleButton active value="all" onClick={() => setToggle('all')}>All</ToggleButton>

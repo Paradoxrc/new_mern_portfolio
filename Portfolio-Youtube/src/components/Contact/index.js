@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import { Snackbar } from '@mui/material';
+import { Zoom } from 'react-awesome-reveal';
 
 const Container = styled.div`
 display: flex;
@@ -144,8 +145,9 @@ const Contact = () => {
   return (
     <Container>
       <Wrapper>
+        <Zoom>
         <Title>Contact</Title>
-        <Desc>Feel free to reach out to me for any questions or opportunities!</Desc>
+        <Desc>Feel free to reach out to me for any questions or opportunities!</Desc></Zoom>
         <ContactForm ref={form} onSubmit={handleSubmit}>
           <ContactTitle>Email Me 🚀</ContactTitle>
           <ContactInput placeholder="Your Email" name="from_email" />

@@ -1,67 +1,85 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
 
 const Article = (props) => {
     const { img, disc } = props.item;
-  return (
-    <Container className='project'>
-        <img src={img} alt="project" />
-        <div className="disc">
-            <h1>Description</h1>
-            <p>{disc}
-            <a href="/">demo</a>
-            </p>
-        </div>
-    </Container>
-  )
+    return (
+        <Container className='project'>
+            <Image src={img} alt="project" />
+            <Description className="disc">
+                <Title>Description</Title>
+                <Text>{disc}
+                    <DemoLink href="/">demo</DemoLink>
+                </Text>
+            </Description>
+        </Container>
+    );
 }
 
 export default Article;
 
 const Container = styled.div`
-    height: 10rem;
-    background-color: #4e5156;
-    margin: 0 0.5rem;
-    padding: 0.5rem;
-    border-radius: 5px;
+    width: 400px;  /* Make card wider */
+    height: 280px; /* Adjust height to make it less tall */
+    background-color: ${({ theme }) => theme.card}; 
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 12px 4px rgba(0,0,0,0.4);
     cursor: pointer;
     position: relative;
-    overflow: hidden;
-    img{
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 400ms ease-in-out;
+    transition: all 0.5s ease-in-out;
+    &:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 0 50px 4px rgba(0,0,0,0.6);
+        filter: brightness(1.1);
     }
-    .disc{
-        position: absolute;
-        right: 0;
-        left: 0;
-        bottom: -10rem;
-        text-align: left;
-        padding: 0.5rem;
-        background: linear-gradient(rgba(0,0,0, 0.100), rgba(0,0,0, 0.80));
-        transition: all 400ms ease-in-out;
-        h1{
-            font-size: 1rem;
-        }
-    
-        p{
-            width: 90%;
-            font-size: 0.8rem;
-            a{
-                margin-left: 0.4rem;
-                color: red;
-            }
-        }
-    }
+`;
 
-    :hover > img{
-        transform: scale(1.3);
-    }
+const Image = styled.img`
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 400ms ease-in-out;
+`;
 
-    :hover > .disc{
-        bottom: 0;
+const Description = styled.div`
+    position: absolute;
+    bottom: -120px; /* Start hidden at the bottom */
+    left: 0;
+    right: 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.10), rgba(0, 0, 0, 0.8));
+    padding: 1rem;
+    transition: bottom 400ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 120px; /* Ensure description box height matches hover position */
+    &:hover {
+        bottom: 0; /* Slide-up on hover */
     }
+    ${Container}:hover & {
+        bottom: 0; /* Ensure it shows when card is hovered */
+    }
+`;
 
-`
+const Title = styled.h1`
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: ${({ theme }) => theme.text_secondary};
+`;
+
+const Text = styled.p`
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: ${({ theme }) => theme.text_secondary + 99};
+`;
+
+const DemoLink = styled.a`
+    color: ${({ theme }) => theme.primary};
+    margin-left: 0.4rem;
+    font-weight: 500;
+    text-decoration: underline;
+    &:hover {
+        color: ${({ theme }) => theme.primaryHover};
+    }
+`;

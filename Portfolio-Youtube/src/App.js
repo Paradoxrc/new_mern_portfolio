@@ -74,11 +74,12 @@ function App() {
                 <Wrapper>
                   <Skills />
                   <Experience />
-                  <Articles/> {/* Updated the slider component */}
+                 
                 </Wrapper>
                 <Projects openModal={openModal} setOpenModal={setOpenModal} />
                 <Wrapper>
                   <Education />
+                  <Articles/> {/* Updated the slider component */}
                   <Contact />
                 </Wrapper>
                 <Footer />

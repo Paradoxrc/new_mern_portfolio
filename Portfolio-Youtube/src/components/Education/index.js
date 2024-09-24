@@ -10,6 +10,8 @@ import TimelineDot from '@mui/lab/TimelineDot';
 // import { education, experiences } from '../../data/constants';
 import EducationCard from '../Cards/EducationCard';
 import { useSelector } from 'react-redux';
+import { Zoom } from 'react-awesome-reveal';
+
 
 const Container = styled.div`
     display: flex;
@@ -95,10 +97,12 @@ const educations = portfolioData.education;
     return (
         <Container id="education">
             <Wrapper>
+                <Zoom>
                 <Title>Education</Title>
                 <Desc>
                     My education has been a journey of self-discovery and growth. My educational details are as follows.
                 </Desc>
+                </Zoom>
                 <TimelineSection>
                     <Timeline>
                         {educations.map((education,index) => (
