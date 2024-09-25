@@ -20,6 +20,7 @@ import Loader from "./components/Loader/Loader.js";
 import SocialIcons from "./components/Footer/SocialIcons.js";
 
 import Articles from './components/Articles/Articles.jsx';// Updated file name
+import Awards from './components/Award/Awards.jsx';
 
 import styled from "styled-components";
 import './App.css';
@@ -77,6 +78,7 @@ function App() {
                  
                 </Wrapper>
                 <Projects openModal={openModal} setOpenModal={setOpenModal} />
+                <Awards/>
                 <Wrapper>
                   <Education />
                   <Articles/> {/* Updated the slider component */}

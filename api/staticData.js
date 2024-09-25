@@ -576,3 +576,18 @@ const experiences = [
       doc: "https://firebasestorage.googleapis.com/v0/b/buckoid-917cf.appspot.com/o/WhatsApp%20Image%202023-05-05%20at%2012.07.39%20AM.jpeg?alt=media&token=9f0e1648-568b-422d-bd0b-1f125f722245",
     },
   ];
+
+  const articles = [
+    {
+      id: 0,
+      img: "https://miro.medium.com/v2/resize:fit:828/format:webp/1*eK-AUQgh-ZQsCDVBwhRm7A.jpeg",
+      desc: "nsjdmskflmksdmflksmfksmdlfksldfmslkm"
+    },
+
+    {
+      id: 1,
+      img: "https://miro.medium.com/v2/resize:fit:828/format:webp/1*eK-AUQgh-ZQsCDVBwhRm7A.jpeg",
+      desc: "nsjdmskflmksdmflksmfksmdlfksldfmslkm"
+    }
+
+  ]

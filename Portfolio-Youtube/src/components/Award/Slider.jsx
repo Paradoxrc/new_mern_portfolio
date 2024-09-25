@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Slider from 'react-slick';
-import Article from './Article';
+import Award from './Award';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
@@ -59,7 +59,7 @@ const SliderComp = () => {
   console.log('portfolioData:', portfolioData);
 
   // Fallback data in case portfolioData is empty
-  const articles = portfolioData?.article?.length > 0 ? portfolioData.article : [
+  const awards = portfolioData?.award?.length > 0 ? portfolioData.award : [
     { img: "https://via.placeholder.com/400", desc: "Sample Article 1" },
     { img: "https://via.placeholder.com/400", desc: "Sample Article 2" },
     { img: "https://via.placeholder.com/400", desc: "Sample Article 3" }
@@ -68,8 +68,8 @@ const SliderComp = () => {
   return (
     <Container>
       <Slider ref={arrowRef} {...settings}>
-        {articles.map((item, i) => (
-          <Article item={item} key={i} />
+        {awards.map((item, i) => (
+          <Award item={item} key={i} />
         ))}
       </Slider>
       <Buttons>

@@ -5,6 +5,9 @@ import Skills from './AdminSkills';
 import Projects from './AdminProjects';
 import Education from './AdminEducation';
 import Experience from './AdminExperience';
+import Article from './AdminArticlce';
+import Award from './AdminAward';
+
 
 
 const onChange = (key) => {
@@ -36,6 +39,16 @@ const items = [
     key: '5',
     label: 'Experience',
     children: <Experience />,
+  },
+  {
+    key: '6',
+    label: 'Article',
+    children: <Article />,
+  },
+  {
+    key: '7',
+    label: 'Awards',
+    children: <Award />,
   },
 
 ];

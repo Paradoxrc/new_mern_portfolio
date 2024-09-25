@@ -1,32 +1,36 @@
 const router = require("express").Router();
-const {Intro,Skill,Project,Education,Experience} = require("../models/portfolioModel");
+const {Intro,Skill,Project,Education,Experience,Article,Award} = require("../models/portfolioModel");
 
 
 
 //get all portfolio data
 router.get("/get-portfolio-data", async (req, res) => {
     try {
-        
         const intros = await Intro.find();
         const skills = await Skill.find();
         const projects = await Project.find();
         const educations = await Education.find();
         const experiences = await Experience.find();
-     
+        const articles = await Article.find();
+        const awards = await Award.find();
+
+       
 
         res.status(200).send({
-            intro:intros[0],
-            skill:skills,
-            project:projects,
-            education:educations,
-            experience:experiences,
-            
-        })
-
+            intro: intros[0], // Adjust as needed
+            skill: skills,
+            project: projects,
+            education: educations,
+            experience: experiences,
+            article: articles || [], 
+            award: awards || [],// Ensure articles is an array or default to empty array
+        });
     } catch (error) {
+        console.error("Error fetching portfolio data:", error);
         res.status(400).send(error);
     }
 });
+
 
 //update intro
 router.post("/update-intro", async (req, res) => {
@@ -146,6 +150,70 @@ router.post("/update-experience", async (req, res) => {
         success: false,
         message: "Failed to update experiences",
         error: error.message
+      });
+    }
+  });
+
+  router.get('/get-articles', async (req, res) => {
+    try {
+      const articles = await Article.find();
+      res.status(200).send(articles);
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+      res.status(400).send(error);
+    }
+  });
+
+  router.post('/update-articles', async (req, res) => {
+    try {
+      const updatedArticles = req.body.articles; // Array of updated articles
+  
+      // Validate and update each article
+      await Article.deleteMany({}); // Remove all existing articles
+      await Article.insertMany(updatedArticles); // Insert new articles
+  
+      res.status(200).send({
+        success: true,
+        message: 'Articles updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating articles:', error);
+      res.status(400).send({
+        success: false,
+        message: 'Failed to update articles',
+        error: error.message,
+      });
+    }
+  });
+
+  router.get('/get-awards', async (req, res) => {
+    try {
+      const awards = await Award.find();
+      res.status(200).send(awards);
+    } catch (error) {
+      console.error('Error fetching articles:', error);
+      res.status(400).send(error);
+    }
+  });
+
+  router.post('/update-awards', async (req, res) => {
+    try {
+      const updatedAwards = req.body.awards; // Array of updated articles
+  
+      // Validate and update each article
+      await Award.deleteMany({}); // Remove all existing articles
+      await Award.insertMany(updatedAwards); // Insert new articles
+  
+      res.status(200).send({
+        success: true,
+        message: 'Awards updated successfully',
+      });
+    } catch (error) {
+      console.error('Error updating awards:', error);
+      res.status(400).send({
+        success: false,
+        message: 'Failed to update awards',
+        error: error.message,
       });
     }
   });

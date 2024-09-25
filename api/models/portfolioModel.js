@@ -153,6 +153,34 @@ const educationSchema = new mongoose.Schema({
     }
   });
 
+  const articleSchema = new mongoose.Schema({
+    img: {
+      type: String, // URL for the image
+      required: true
+    },
+    title: {
+      type: String,
+      required: true
+    },
+    desc: {
+      type: String,
+      required: true
+    },
+    
+  });
+
+  const awardSchema = new mongoose.Schema({
+    img: {
+      type: String, // URL for the image
+      required: true
+    },
+    desc: {
+      type: String,
+      required: true
+    },
+    
+  });
+
 
 module.exports ={
     Intro: mongoose.model("intros", introSchema),
@@ -160,5 +188,7 @@ module.exports ={
     Project: mongoose.model("projects", projectSchema),
     Education: mongoose.model("educations", educationSchema),
     Experience: mongoose.model("experiences", experienceSchema),
+    Article: mongoose.model("articles",articleSchema),
+    Award:mongoose.model("awards",awardSchema),
  
 } 

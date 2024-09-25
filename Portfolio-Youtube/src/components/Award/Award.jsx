@@ -1,15 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Article = (props) => {
-    const { title,img, desc } = props.item || {}; // Safeguard props.item
+const Award = (props) => {
+    const { img, desc } = props.item || {}; // Safeguard props.item
 
     // If img or desc are undefined, render a placeholder for testing
     return (
         <Container>
             <Image src={img || "https://via.placeholder.com/400"} alt="project" />
             <Description>
-                <Title>{title}</Title>
+                {/* <Title>Description</Title> */}
                 <Text>{desc || "No description available."}
                     <DemoLink href="/">demo</DemoLink>
                 </Text>
@@ -18,7 +18,7 @@ const Article = (props) => {
     );
 }
 
-export default Article;
+export default Award;
 
 const Container = styled.div`
     width: 400px;
