@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
@@ -46,6 +46,7 @@ const AdminExperience = () => {
   const dispatch = useDispatch();
   const { portfolioData } = useSelector((state) => state.root);
   const [form] = Form.useForm();
+  const [deletedExperiences, setDeletedExperiences] = useState([]);
 
   useEffect(() => {
     if (portfolioData?.experience) {
@@ -53,14 +54,18 @@ const AdminExperience = () => {
     }
   }, [portfolioData, form]);
 
-  const showConfirmationModal = (remove, name, isSkill = false) => {
+  const showConfirmationModal = (remove, name, id) => {
     Modal.confirm({
-      title: isSkill ? `Are you sure you want to remove this skill?` : `Are you sure you want to remove this experience: ${name}?`,
+      title: `Are you sure you want to remove this experience: ${name}?`,
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk() {
+        if (id) {
+          setDeletedExperiences((prev) => [...prev, id]);
+        }
         remove();
+        form.validateFields();
       },
     });
   };
@@ -68,7 +73,10 @@ const AdminExperience = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-experience', { experiences: values.experiences });
+      const response = await axios.post('/api/portfolio/update-experience', {
+        experiences: values.experiences,
+        deletedExperiences, // Send the deleted experiences to the server
+      });
       dispatch(HideLoading());
 
       if (response.data.success) {
@@ -77,6 +85,7 @@ const AdminExperience = () => {
         message.error(response.data.message);
       }
     } catch (error) {
+      dispatch(HideLoading());
       message.error(error.message);
     }
   };
@@ -125,6 +134,17 @@ const AdminExperience = () => {
                     <Input.TextArea placeholder="Enter description" />
                   </Form.Item>
 
+                  {/* Image Field */}
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'img']}
+                    label="Image URL"
+                    rules={[{ required: true, message: 'Please input the image URL' }]}
+                  >
+                    <Input placeholder="Enter image URL" />
+                  </Form.Item>
+
+                  {/* Skills Section */}
                   <Form.List name={[name, 'skills']}>
                     {(skillFields, { add: addSkill, remove: removeSkill }) => (
                       <>
@@ -139,7 +159,10 @@ const AdminExperience = () => {
                               <Input placeholder="Enter skill" />
                             </Form.Item>
 
-                            <RemoveButton type="danger" onClick={() => showConfirmationModal(removeSkill, skillField.name, true)}>
+                            <RemoveButton
+                              onClick={() => removeSkill(skillField.name)}
+                              style={{ marginTop: '30px' }}
+                            >
                               Remove Skill
                             </RemoveButton>
                           </div>
@@ -151,25 +174,16 @@ const AdminExperience = () => {
                     )}
                   </Form.List>
 
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'img']}
-                    label="Image URL"
-                    rules={[{ required: true, message: 'Please input the image URL' }]}
+                  <RemoveButton
+                    type="danger"
+                    onClick={() =>
+                      showConfirmationModal(
+                        () => remove(name),
+                        form.getFieldValue(['experiences', name, 'role']),
+                        form.getFieldValue(['experiences', name, '_id'])
+                      )
+                    }
                   >
-                    <Input placeholder="Enter image URL" />
-                  </Form.Item>
-
-                  <Form.Item
-                    {...restField}
-                    name={[name, 'doc']}
-                    label="Document URL"
-                    rules={[{ required: false, message: 'Please input the document URL' }]}
-                  >
-                    <Input placeholder="Enter document URL (optional)" />
-                  </Form.Item>
-
-                  <RemoveButton type="danger" onClick={() => showConfirmationModal(remove, form.getFieldValue(['experiences', name, 'role']))}>
                     Remove Experience
                   </RemoveButton>
                 </ExperienceSection>

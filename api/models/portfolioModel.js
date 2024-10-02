@@ -77,7 +77,7 @@ const skillsSchema = new mongoose.Schema({
 
 
 const projectSchema = new mongoose.Schema({
-  id: { type: Number, required: true, unique: true }, // Unique ID for the project
+ 
   title: { type: String, required: true }, // Project title
   date: { type: String, required: true }, // Date or duration of the project
   description: { type: String, required: true }, // Project description

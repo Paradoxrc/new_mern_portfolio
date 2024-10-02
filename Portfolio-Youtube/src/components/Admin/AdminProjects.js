@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Button, message, Collapse, Modal } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
@@ -47,6 +47,7 @@ const AdminProjects = () => {
   const dispatch = useDispatch();
   const { portfolioData } = useSelector((state) => state.root);
   const [form] = Form.useForm();
+  const [deletedProjects, setDeletedProjects] = useState([]);
 
   useEffect(() => {
     if (portfolioData?.project) {
@@ -56,29 +57,51 @@ const AdminProjects = () => {
 
   const onFinish = async (values) => {
     try {
+      const updatedProjects = values.projects.map((project) => {
+        if (!project._id) {
+          const { _id, ...rest } = project;
+          return rest; // Ensure new projects don't send _id
+        }
+        return project;
+      });
+
+      console.log('Projects to be updated:', updatedProjects);
+      console.log('Deleted projects:', deletedProjects);
+
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-projects', { projects: values.projects });
+      const response = await axios.post('/api/portfolio/update-projects', {
+        projects: updatedProjects,
+        deletedProjects,
+      });
       dispatch(HideLoading());
 
       if (response.data.success) {
         message.success(response.data.message);
+        setDeletedProjects([]); // Reset deleted projects
+        form.resetFields(); // Reset form
       } else {
         message.error(response.data.message);
       }
     } catch (error) {
+      dispatch(HideLoading());
+      console.error('Error:', error);
       message.error(error.message);
     }
   };
 
-  const confirmDelete = (name, remove) => {
+  const confirmDelete = (remove, fieldName) => {
     Modal.confirm({
-      title: 'Are you sure you want to delete this item?',
+      title: 'Are you sure you want to delete this project?',
       content: 'This action cannot be undone.',
       okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk() {
-        remove(name);
+        const projectId = form.getFieldValue(['projects', fieldName, '_id']);
+        if (projectId) {
+          setDeletedProjects((prev) => [...prev, projectId]);
+        }
+        remove(fieldName);
       },
     });
   };
@@ -89,12 +112,23 @@ const AdminProjects = () => {
         <Form.List name="projects">
           {(fields, { add, remove }) => (
             <>
-              {fields.map(({ key, name }) => (
+              {fields.map(({ key, name: fieldName }) => (
                 <Collapse key={key} defaultActiveKey={[]} ghost>
-                  <Collapse.Panel header={form.getFieldValue(['projects', name, 'title']) || `Project ${key + 1}`} key={key}>
+                  <Collapse.Panel
+                    header={
+                      form.getFieldValue(['projects', fieldName, 'title']) ||
+                      `Project ${key + 1}`
+                    }
+                    key={key}
+                    forceRender
+                  >
                     <ProjectSection>
+                      <Form.Item name={[fieldName, '_id']} hidden>
+                        <Input />
+                      </Form.Item>
+
                       <Form.Item
-                        name={[name, 'title']}
+                        name={[fieldName, 'title']}
                         label="Project Title"
                         rules={[{ required: true, message: 'Please input the project title' }]}
                       >
@@ -102,7 +136,7 @@ const AdminProjects = () => {
                       </Form.Item>
 
                       <Form.Item
-                        name={[name, 'description']}
+                        name={[fieldName, 'description']}
                         label="Project Description"
                         rules={[{ required: true, message: 'Please input the project description' }]}
                       >
@@ -110,7 +144,7 @@ const AdminProjects = () => {
                       </Form.Item>
 
                       <Form.Item
-                        name={[name, 'image']}
+                        name={[fieldName, 'image']}
                         label="Project Image URL"
                         rules={[{ required: true, message: 'Please input the image URL' }]}
                       >
@@ -118,7 +152,7 @@ const AdminProjects = () => {
                       </Form.Item>
 
                       <Form.Item
-                        name={[name, 'category']}
+                        name={[fieldName, 'category']}
                         label="Project Category"
                         rules={[{ required: true, message: 'Please input the project category' }]}
                       >
@@ -126,7 +160,15 @@ const AdminProjects = () => {
                       </Form.Item>
 
                       <Form.Item
-                        name={[name, 'github']}
+                        name={[fieldName, 'date']}
+                        label="Project Date"
+                        rules={[{ required: true, message: 'Please input the project date' }]}
+                      >
+                        <Input placeholder="Enter project date (e.g., 2024-10-01)" />
+                      </Form.Item>
+
+                      <Form.Item
+                        name={[fieldName, 'github']}
                         label="Project GitHub URL"
                         rules={[{ required: true, message: 'Please input the GitHub URL' }]}
                       >
@@ -134,7 +176,7 @@ const AdminProjects = () => {
                       </Form.Item>
 
                       <Form.Item
-                        name={[name, 'webapp']}
+                        name={[fieldName, 'webapp']}
                         label="Project WebApp URL"
                         rules={[{ required: true, message: 'Please input the WebApp URL' }]}
                       >
@@ -142,11 +184,14 @@ const AdminProjects = () => {
                       </Form.Item>
 
                       {/* Tags */}
-                      <Form.List name={[name, 'tags']}>
+                      <Form.List name={[fieldName, 'tags']}>
                         {(tagFields, { add: addTagField, remove: removeTagField }) => (
                           <>
                             {tagFields.map((tagField, index) => (
-                              <div key={tagField.key} style={{ display: 'flex', gap: '20px', marginBottom: '10px' }}>
+                              <div
+                                key={tagField.key}
+                                style={{ display: 'flex', gap: '20px', marginBottom: '10px' }}
+                              >
                                 <Form.Item
                                   {...tagField}
                                   name={[tagField.name]}
@@ -156,7 +201,7 @@ const AdminProjects = () => {
                                   <Input placeholder="Enter tag" />
                                 </Form.Item>
 
-                                <RemoveButton onClick={() => confirmDelete(tagField.name, removeTagField)}>
+                                <RemoveButton onClick={() => removeTagField(tagField.name)}>
                                   Remove Tag
                                 </RemoveButton>
                               </div>
@@ -169,7 +214,7 @@ const AdminProjects = () => {
                       </Form.List>
 
                       {/* Members */}
-                      <Form.List name={[name, 'member']}>
+                      <Form.List name={[fieldName, 'member']}>
                         {(memberFields, { add: addMemberField, remove: removeMemberField }) => (
                           <>
                             {memberFields.map(({ key: memberKey, name: memberName }) => (
@@ -207,7 +252,7 @@ const AdminProjects = () => {
                                   <Input placeholder="Enter LinkedIn link" />
                                 </Form.Item>
 
-                                <RemoveButton onClick={() => confirmDelete(memberName, removeMemberField)}>
+                                <RemoveButton onClick={() => removeMemberField(memberName)}>
                                   Remove Member
                                 </RemoveButton>
                               </div>
@@ -219,7 +264,9 @@ const AdminProjects = () => {
                         )}
                       </Form.List>
 
-                      <RemoveButton onClick={() => confirmDelete(name, remove)}>
+                      <RemoveButton
+                        onClick={() => confirmDelete(remove, fieldName)}
+                      >
                         Remove Project
                       </RemoveButton>
                     </ProjectSection>

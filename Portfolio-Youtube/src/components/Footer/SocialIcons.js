@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import React from "react";
 import styled from "styled-components";
 import { Facebook, Github, LinkedIn, YouTube } from "./AllSvgs";
+import { useSelector } from 'react-redux'; 
+import { GitHub } from "@mui/icons-material";
 
 
 const Icons = styled.div`
@@ -19,14 +21,15 @@ const Icons = styled.div`
   }
 
   @media (max-width: 768px) {
-    position: absolute;
-    flex-direction: row;
+  display: none;
+    // position: absolute;
+    // flex-direction: row;
     
-    bottom: 0rem;
-    left: 50%;
-    transform: translateX(-50%);
-    & > *:not(:last-child) {
-      margin: 0 0.5rem;
+    // bottom: 0rem;
+    // left: 50%;
+    // transform: translateX(-50%);
+    // & > *:not(:last-child) {
+    //   margin: 0 0.5rem;
     }
   }
 `;
@@ -37,13 +40,23 @@ const Line = styled(motion.span)`
   background-color:white;
 
   @media (max-width: 768px) {
-    width: 0rem;
-    height: 0px;
-    margin-top: 0.5rem;
+    // width: 0rem;
+    // height: 0px;
+    // margin-top: 0.5rem;
   }
 `;
 
 const SocialIcons = (props) => {
+
+  const { portfolioData } = useSelector((state) => state.root);
+  const intro = portfolioData?.intro;
+ 
+ 
+  const linkedin = intro?.linkedin;
+  const youtube = intro?.youtube;
+  const github = intro?.github;
+  const facebook = intro?.facebook;
+
   return (
     <Icons>
       <motion.div
@@ -55,7 +68,7 @@ const SocialIcons = (props) => {
           style={{ color: "inherit" }}
           target="_blank"
           rel="noopener noreferrer"
-          href={"https://github.com/Paradoxrc"}
+          href={github}
         >
           <Github
             width={25}
@@ -74,7 +87,7 @@ const SocialIcons = (props) => {
           style={{ color: "inherit" }}
           target="_blank"
           rel="noopener noreferrer"
-          href={"https://www.linkedin.com/in/dinith-edirisinghe-103619282/"}
+          href={linkedin}
         >
           <LinkedIn
             width={25}
@@ -93,7 +106,7 @@ const SocialIcons = (props) => {
           style={{ color: "inherit" }}
           target="_blank"
           rel="noopener noreferrer"
-          href={"https://www.facebook.com/dinith.edirisinghe.1"}
+          href={facebook}
         >
           <Facebook
             width={25}
@@ -112,7 +125,7 @@ const SocialIcons = (props) => {
           style={{ color: "inherit" }}
           target="_blank"
           rel="noopener noreferrer"
-          href={"https://www.youtube.com/channel/UCXsWfJXAXTGStNTBOWVD_rg"}
+          href={youtube}
         >
           <YouTube
             width={25}

@@ -40,7 +40,7 @@ const Title = styled.h1`
     margin-bottom: 1rem;
     
     .highlight {
-        color: #854CE6; /* Matches the color of TimelineConnector in the previous page */
+        color: #739efe; /* Matches the color of TimelineConnector in the previous page */
     }
 
     @media (max-width: 768px) {

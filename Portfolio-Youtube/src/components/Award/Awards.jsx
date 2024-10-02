@@ -5,7 +5,7 @@ import { Zoom } from 'react-awesome-reveal';
 
 const Awards = () => {
     return (
-        <Container id='articles'>
+        <Container id='awards'>
             <Zoom>
                 <Title>Awards & <span className="highlight">Achievements</span></Title>
                 <Desc>Here are some Awards and Achievements in my life</Desc>
@@ -40,7 +40,7 @@ const Title = styled.h1`
     margin-bottom: 1rem;
     
     .highlight {
-        color: #854CE6; /* Matches the color of TimelineConnector in the previous page */
+        color: #739efe; /* Matches the color of TimelineConnector in the previous page */
     }
 
     @media (max-width: 768px) {

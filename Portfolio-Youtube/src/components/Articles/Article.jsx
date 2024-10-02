@@ -35,6 +35,23 @@ const Container = styled.div`
         box-shadow: 0 0 50px 4px rgba(0,0,0,0.6);
         filter: brightness(1.1);
     }
+              @media (max-width: 1024px) {
+        width: 280px;
+        height: 180px;
+    }
+
+    @media (max-width: 768px) {
+        width: 240px;
+        height: 180px;
+    }
+
+    @media (max-width: 480px) {
+        width: 260px;
+        height: 180px;
+      
+    margin: 0 auto;
+    }
+        
 `;
 
 const Image = styled.img`
@@ -68,12 +85,26 @@ const Title = styled.h1`
     font-size: 1.2rem;
     font-weight: 600;
     color: ${({ theme }) => theme.text_secondary || "#fff"};
+       @media (max-width: 768px) {
+        font-size: 1.2rem;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 1rem;
+    }
 `;
 
 const Text = styled.p`
     font-size: 0.9rem;
     font-weight: 400;
     color: ${({ theme }) => theme.text_secondary || "#ccc"}99;
+      @media (max-width: 768px) {
+        font-size: 0.7rem;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 0.6rem;
+    }
 `;
 
 const DemoLink = styled.a`

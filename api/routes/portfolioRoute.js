@@ -77,35 +77,63 @@ router.post("/update-skills", async (req, res) => {
     }
   });
 
-  router.post("/update-projects", async (req, res) => {
+  
+  
+  // Ensure the backend checks for missing required fields in new projects
+  router.post('/update-projects', async (req, res) => {
     try {
-      const updatedProjects = req.body.projects; // Array of updated projects
+      const updatedProjects = req.body.projects;
+      const deletedProjects = req.body.deletedProjects;
   
-      // Validate each project to ensure it has required fields
-      updatedProjects.forEach(project => {
-        if (!project.title || !project.description || !project.image || !project.category) {
-          throw new Error("Each project must have a title, description, image, and category.");
-        }
-      });
+      console.log('Received updated projects:', updatedProjects);
+      console.log('Received deleted projects:', deletedProjects);
   
-      // Loop through each project and either update or create it
+      // Validate data
+      if (!Array.isArray(updatedProjects) || !Array.isArray(deletedProjects)) {
+        return res.status(400).send({
+          success: false,
+          message: 'Invalid data format. Projects and deletedProjects must be arrays.',
+        });
+      }
+  
+      // Validate that new projects have required fields
       for (const project of updatedProjects) {
-        await Project.updateOne(
-          { _id: project._id }, // Match by ID
-          { $set: project }, // Update project fields
-          { upsert: true } // Insert if it doesn't exist
-        );
+        if (!project._id) {
+          if (!project.title || !project.description || !project.image) {
+            console.log('Missing required fields:', project); // Log the problematic project
+            return res.status(400).send({
+              success: false,
+              message: 'Missing required fields (title, description, or image) for new project.',
+            });
+          }
+        }
+      }
+  
+      // Remove deleted projects from the database
+      if (deletedProjects.length > 0) {
+        await Project.deleteMany({ _id: { $in: deletedProjects } });
+      }
+  
+      // Insert or update each project
+      for (const project of updatedProjects) {
+        if (project._id) {
+          await Project.findByIdAndUpdate(project._id, project);
+        } else {
+          const newProject = new Project(project);
+          await newProject.save();
+        }
       }
   
       res.status(200).send({
         success: true,
-        message: "Projects updated successfully"
+        message: 'Projects updated successfully',
       });
     } catch (error) {
+      console.error('Error updating projects:', error); // Log the full error
       res.status(400).send({
         success: false,
-        message: "Failed to update projects",
-        error: error.message
+        message: 'Error updating projects',
+        error: error.message,
       });
     }
   });
@@ -132,27 +160,47 @@ router.post("/update-education", async (req, res) => {
     });
   }
 });
-
 router.post("/update-experience", async (req, res) => {
-    try {
-      const updatedExperiences = req.body.experiences; // Array of updated experiences
-  
-      // Update each experience or replace the entire experiences array
-      await Experience.deleteMany({}); // Remove old experiences
-      await Experience.insertMany(updatedExperiences); // Insert new experiences
-  
-      res.status(200).send({
-        success: true,
-        message: "Experiences updated successfully"
+  try {
+    const updatedExperiences = req.body.experiences; // Array of updated experiences
+    const deletedExperiences = req.body.deletedExperiences; // Array of IDs for experiences to be deleted
+
+    // Use Promise.all to handle concurrent updates and inserts
+    const updatePromises = updatedExperiences.map(async (experience) => {
+      if (experience._id) {
+        // If there's an ID, update the existing experience
+        return await Experience.findByIdAndUpdate(experience._id, experience, { new: true });
+      } else {
+        // If there's no ID, insert a new experience
+        return await Experience.create(experience);
+      }
+    });
+
+    // Handle experience deletions
+    if (deletedExperiences && deletedExperiences.length > 0) {
+      const deletePromises = deletedExperiences.map(async (id) => {
+        return await Experience.findByIdAndDelete(id);
       });
-    } catch (error) {
-      res.status(400).send({
-        success: false,
-        message: "Failed to update experiences",
-        error: error.message
-      });
+      await Promise.all(deletePromises);
     }
-  });
+
+    // Wait for all updates to complete
+    await Promise.all(updatePromises);
+
+    res.status(200).send({
+      success: true,
+      message: "Experiences updated successfully"
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Failed to update experiences",
+      error: error.message
+    });
+  }
+});
+
+
 
   router.get('/get-articles', async (req, res) => {
     try {

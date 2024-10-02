@@ -118,9 +118,9 @@ const Date = styled.div`
 `
 
 const Grade = styled.div`
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 500;
-    color: ${({ theme }) => theme.text_secondary + 99};
+    color: ${({ theme }) => theme.primary};
     @media only screen and (max-width: 768px){
         font-size: 12px;
     }
