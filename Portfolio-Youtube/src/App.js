@@ -18,6 +18,7 @@ import ProjectDetails from "./components/ProjectDetails";
 import Admin from "./components/Admin";
 import Loader from "./components/Loader/Loader.js";
 import SocialIcons from "./components/Footer/SocialIcons.js";
+import Chatbot from './components/Footer/chatBot.js';
 
 import Articles from './components/Articles/Articles.jsx';// Updated file name
 import Awards from './components/Award/Awards.jsx';
@@ -70,6 +71,7 @@ function App() {
             element={
               <Body>
                 <SocialIcons />
+                <Chatbot/>
                 <Navbar />
                 <HeroSection />
                 <Wrapper>

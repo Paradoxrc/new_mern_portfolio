@@ -2,16 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Article = (props) => {
-    const { title,img, desc } = props.item || {}; // Safeguard props.item
+    const { title,img, desc,link } = props.item || {}; // Safeguard props.item
 
     // If img or desc are undefined, render a placeholder for testing
     return (
-        <Container>
+        <Container onClick={() => window.open(link, '_blank')}>
             <Image src={img || "https://via.placeholder.com/400"} alt="project" />
             <Description>
                 <Title>{title}</Title>
                 <Text>{desc || "No description available."}
-                    <DemoLink href="/">demo</DemoLink>
+                    <DemoLink href={link}>more</DemoLink>
                 </Text>
             </Description>
         </Container>
@@ -27,15 +27,17 @@ const Container = styled.div`
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 0 12px 4px rgba(0,0,0,0.4);
+    border: 0.1px solid #854CE6;
     cursor: pointer;
     position: relative;
     transition: all 0.5s ease-in-out;
+
     &:hover {
         transform: translateY(-10px);
         box-shadow: 0 0 50px 4px rgba(0,0,0,0.6);
         filter: brightness(1.1);
     }
-              @media (max-width: 1024px) {
+           @media (max-width: 1024px) {
         width: 280px;
         height: 180px;
     }
@@ -46,12 +48,12 @@ const Container = styled.div`
     }
 
     @media (max-width: 480px) {
-        width: 260px;
-        height: 180px;
+        width: 290px;
+        height: 200px;
       
     margin: 0 auto;
+    
     }
-        
 `;
 
 const Image = styled.img`

@@ -124,8 +124,15 @@ const AdminArticles = () => {
                         label="Article Description"
                         rules={[{ required: true, message: 'Please input the article description' }]}
                       >
+                          
                         <Input.TextArea rows={4} placeholder="Enter article description" />
                       </Form.Item>
+                      <Form.Item
+                        name={[name, 'link']} // Change from 'description' to 'desc'
+                        label="Article Link"
+                        rules={[{ required: true, message: 'Please input the link' }]}
+                        
+                      ><Input placeholder="Enter article link" /></Form.Item>
 
                       <Form.Item
                         name={[name, 'img']} // Change from 'imageUrl' to 'img'

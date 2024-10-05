@@ -9,7 +9,7 @@ const Award = (props) => {
             <Image src={img || "https://via.placeholder.com/400"} alt="project" />
             <Description>
                 <Text>{desc || "No description available."}
-                    <DemoLink href="/">demo</DemoLink>
+                    
                 </Text>
             </Description>
         </Container>
@@ -98,9 +98,9 @@ const Description = styled.div`
 `;
 
 const Text = styled.p`
-    font-size: 0.8rem;
+    font-size: 1rem;
     font-weight: 400;
-    color: ${({ theme }) => theme.text_secondary || "#ccc"}99;
+    color: ${({ theme }) => theme.text_secondary || "#ccc"};
 
     @media (max-width: 768px) {
         font-size: 0.7rem;
