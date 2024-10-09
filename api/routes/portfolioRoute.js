@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {Intro,Skill,Project,Education,Experience,Article,Award} = require("../models/portfolioModel");
-
+const User = require("../models/userModel");
 
 
 //get all portfolio data
@@ -265,6 +265,30 @@ router.post("/update-experience", async (req, res) => {
       });
     }
   });
+
+//admin login
+router.post("/admin-login", async (req, res) => {
+  try {
+    
+    const admin = await Admin.findOne({ username: req.body.username, password: req.body.password });
+if(user){
+  res.status(200).send({
+    data:user,
+    success: true,
+    message: "Admin logged in successfully",
+  });
+}else{
+  res.status(400).send({
+    data: user,
+    success: false,
+    message: "Invalid credentials",
+  });
+}
+  } catch (error) {
+    res.status(400).send(error);
+  }
+});
+
 
 module.exports = router;
 
