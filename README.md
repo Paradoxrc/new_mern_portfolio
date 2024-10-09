@@ -14,10 +14,6 @@ Welcome to my portfolio! This project showcases my skills, projects, and experie
 - [Introduction](#introduction)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Introduction
 My Portfolio is a Full stack web app created using MERN stack. This has an admin panel that can change the content in the pages without have to updating the code
