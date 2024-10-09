@@ -49,3 +49,6 @@ My Portfolio is a Full stack web app created using MERN stack. This has an admin
 - MongoDB Atlas
 - Express.js
 - Git: A version control system for tracking changes and collaborating on projects.
+
+- ## Watch the Game Trailers
+- [Game Trailer](https://youtu.be/cyzYDDS_bUQ?si=atwwsCHhDTs0cPBU)  
