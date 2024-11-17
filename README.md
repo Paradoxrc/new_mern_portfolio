@@ -4,22 +4,22 @@ Welcome to my portfolio! This project showcases my skills, projects, and experie
 ## Some Images:
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
   <div style="flex: 0 0 45%; max-width: 45%;">
-    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/Portfolio-Youtube/public/Screenshot%202024-10-05%20192633.png?raw=true" alt="Project Screenshot 1"/>
+    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/frontend/public/Screenshot%202024-10-05%20192633.png?raw=true" alt="Project Screenshot 1"/>
   </div>
   <div style="flex: 0 0 45%; max-width: 45%;">
-    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/Portfolio-Youtube/public/Screenshot%202024-10-05%20192706.png?raw=true" alt="Project Screenshot 2"/>
+    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/frontend/public/Screenshot%202024-10-05%20192706.png?raw=true" alt="Project Screenshot 2"/>
   </div>
   <div style="flex: 0 0 45%; max-width: 45%;">
-    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/Portfolio-Youtube/public/Screenshot%202024-10-05%20192733.png?raw=true" alt="Project Screenshot 3"/>
+    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/frontend/public/Screenshot%202024-10-05%20192733.png?raw=true" alt="Project Screenshot 3"/>
   </div>
   <div style="flex: 0 0 45%; max-width: 45%;">
-    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/Portfolio-Youtube/public/Screenshot%202024-10-05%20192759.png?raw=true" alt="Project Screenshot 4"/>
+    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/fronteend/public/Screenshot%202024-10-05%20192759.png?raw=true" alt="Project Screenshot 4"/>
   </div>
   <div style="flex: 0 0 45%; max-width: 45%;">
-    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/Portfolio-Youtube/public/Screenshot%202024-10-05%20192820.png?raw=true" alt="Project Screenshot 5"/>
+    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/frontend/public/Screenshot%202024-10-05%20192820.png?raw=true" alt="Project Screenshot 5"/>
   </div>
   <div style="flex: 0 0 45%; max-width: 45%;">
-    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/Portfolio-Youtube/public/Screenshot%202024-10-05%20193114.png?raw=true" alt="Project Screenshot 6"/>
+    <img width="100%" src="https://github.com/Paradoxrc/new_mern_portfolio/blob/main/frontend/public/Screenshot%202024-10-05%20193114.png?raw=true" alt="Project Screenshot 6"/>
   </div>
 </div>
 
@@ -49,3 +49,6 @@ My Portfolio is a Full stack web app created using MERN stack. This has an admin
 - MongoDB Atlas
 - Express.js
 - Git: A version control system for tracking changes and collaborating on projects.
+
+- ## Watch the emo
+- [Demo](https://youtu.be/cyzYDDS_bUQ?si=atwwsCHhDTs0cPBU)  
