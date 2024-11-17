@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
 import { SetPortfolioData, ShowLoading, HideLoading } from "./redux/rootSlice.js";
+import Clients from "./components/Clients/Clients";
 
 import Navbar from "./components/Navbar";
 import HeroSection from "./components/HeroSection";
@@ -76,6 +77,7 @@ function App() {
                 <Chatbot/>
                 <Navbar />
                 <HeroSection />
+                <Clients />
                 <Wrapper>
                   <Skills />
                   <Experience />
@@ -86,6 +88,7 @@ function App() {
                 <Wrapper>
                   <Education />
                   <Articles/> {/* Updated the slider component */}
+                  
                   <Contact />
                 </Wrapper>
                 <Footer />
