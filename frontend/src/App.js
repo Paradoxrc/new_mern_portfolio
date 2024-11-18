@@ -64,6 +64,8 @@ function App() {
     getPortfolioData();
   }, []);
 
+  
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <Router>

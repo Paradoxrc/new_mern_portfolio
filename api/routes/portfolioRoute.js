@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const {Intro,Skill,Project,Education,Experience,Article,Award} = require("../models/portfolioModel");
-const User = require("../models/userModel");
+const User = require("../models/userModel"); // Ensure this path is correct
+
 
 
 //get all portfolio data
@@ -269,25 +270,36 @@ router.post("/update-experience", async (req, res) => {
 //admin login
 router.post("/admin-login", async (req, res) => {
   try {
-    
-    const admin = await Admin.findOne({ username: req.body.username, password: req.body.password });
-if(user){
-  res.status(200).send({
-    data:user,
-    success: true,
-    message: "Admin logged in successfully",
-  });
-}else{
-  res.status(400).send({
-    data: user,
-    success: false,
-    message: "Invalid credentials",
-  });
-}
+    console.log("Received request body:", req.body); // Check incoming data
+
+    // Attempt to find the user
+    const user = await User.findOne({ username: req.body.username, password: req.body.password });
+    console.log("User found:", user); // Log the user result
+    user.password = "";
+    if (user) {
+      res.status(200).send({
+        data: user,
+        success: true,
+        message: "User logged in successfully", // Or "Admin logged in successfully"
+      });
+    } else {
+      res.status(400).send({
+        success: false,
+        message: "Invalid credentials",
+      });
+    }
   } catch (error) {
-    res.status(400).send(error);
+    console.error("Error during login:", error);
+    res.status(400).send({
+      success: false,
+      message: "An error occurred",
+      error: error.message
+    });
   }
 });
+
+
+
 
 
 module.exports = router;
