@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const {Intro,Skill,Project,Education,Experience,Article,Award} = require("../models/portfolioModel");
+const {Intro,Skill,Project,Education,Experience,Article,Award,Testimonial} = require("../models/portfolioModel");
 const User = require("../models/userModel"); // Ensure this path is correct
 
 
@@ -14,6 +14,7 @@ router.get("/get-portfolio-data", async (req, res) => {
         const experiences = await Experience.find();
         const articles = await Article.find();
         const awards = await Award.find();
+        const testimonials = await Testimonial.find();
 
        
 
@@ -24,7 +25,8 @@ router.get("/get-portfolio-data", async (req, res) => {
             education: educations,
             experience: experiences,
             article: articles || [], 
-            award: awards || [],// Ensure articles is an array or default to empty array
+            award: awards || [], 
+            testimonial: testimonials || [],
         });
     } catch (error) {
         console.error("Error fetching portfolio data:", error);
@@ -297,6 +299,46 @@ router.post("/admin-login", async (req, res) => {
     });
   }
 });
+router.post("/update-testimonials", async (req, res) => {
+  try {
+    const updatedTestimonials = req.body.testimonials; // Array of updated testimonials
+    const deletedTestimonials = req.body.deletedTestimonials; // Array of IDs for testimonials to be deleted
+
+    // Handle updates and inserts
+    const updatePromises = updatedTestimonials.map(async (testimonial) => {
+      if (testimonial._id) {
+        // Update existing testimonial
+        return await Testimonial.findByIdAndUpdate(testimonial._id, testimonial, { new: true });
+      } else {
+        // Create new testimonial
+        return await Testimonial.create(testimonial);
+      }
+    });
+
+    // Handle deletions
+    if (deletedTestimonials && deletedTestimonials.length > 0) {
+      const deletePromises = deletedTestimonials.map(async (id) => {
+        return await Testimonial.findByIdAndDelete(id);
+      });
+      await Promise.all(deletePromises);
+    }
+
+    // Wait for all promises to complete
+    await Promise.all(updatePromises);
+
+    res.status(200).send({
+      success: true,
+      message: "Testimonials updated successfully"
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Failed to update testimonials",
+      error: error.message
+    });
+  }
+});
+
 
 
 

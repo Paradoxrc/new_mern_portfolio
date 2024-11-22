@@ -184,6 +184,31 @@ const educationSchema = new mongoose.Schema({
     },
     
   });
+  const testimonialSchema = new mongoose.Schema({
+
+    name: {
+      type: String,
+      required: true
+    },
+   
+    position: {
+      type: String,
+    }
+    ,
+    stars: {
+      type: Number,
+      required: true
+    },
+  
+    desc: {
+      type: String,
+      required: true
+    },
+    img: {
+      type: String, // URL for the image
+      required: true
+    },
+  });
 
 
 module.exports ={
@@ -194,5 +219,5 @@ module.exports ={
     Experience: mongoose.model("experiences", experienceSchema),
     Article: mongoose.model("articles",articleSchema),
     Award:mongoose.model("awards",awardSchema),
- 
+    Testimonial:mongoose.model("testimonials",testimonialSchema),
 } 

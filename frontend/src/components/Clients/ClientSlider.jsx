@@ -6,6 +6,7 @@ import { AiOutlineStar } from "react-icons/ai";
 const ClientSlider = (props) => {
     const { name, position, img_url, stars, disc } = props.item;
     return (
+        
         <Container>
             <Header>
                 <span className='quote'><IoIosQuote /></span>
@@ -28,6 +29,7 @@ const ClientSlider = (props) => {
                 </div>
             </Footer>
         </Container>
+       
     );
 }
 

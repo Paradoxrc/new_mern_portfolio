@@ -29,6 +29,7 @@ const Navbar = () => {
         </MobileIcon>
         <NavItems>
           <NavLink href="#about">About</NavLink>
+          <NavLink href="#testimonials">Testimonials</NavLink>
           <NavLink href='#skills'>Skills</NavLink>
           <NavLink href='#experience'>Experience</NavLink>
           <NavLink href='#projects'>Projects</NavLink>
@@ -46,6 +47,10 @@ const Navbar = () => {
             <MobileLink href="#about" onClick={() => {
               setIsOpen(!isOpen)
             }}>About</MobileLink>
+             <MobileLink href='#testimonials' onClick={() => {
+              setIsOpen(!isOpen)
+            }}>Testimonial</MobileLink>
+           
             <MobileLink href='#skills' onClick={() => {
               setIsOpen(!isOpen)
             }}>Skills</MobileLink>

@@ -85,6 +85,7 @@ const Clients = () => {
     ));
     
     return (
+        <div id='testimonials'>
         <Container id='client'>
             <Zoom>
                 <Title>Testimonials</Title>
@@ -99,7 +100,7 @@ const Clients = () => {
                     <button onClick={() => arrowRef.current.slickNext()}><IoIosArrowForward /></button>
                 </Buttons>
             </Testimonials>
-        </Container>
+        </Container></div>
     );
 };
 

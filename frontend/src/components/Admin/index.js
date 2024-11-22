@@ -7,6 +7,7 @@ import Education from './AdminEducation';
 import Experience from './AdminExperience';
 import Article from './AdminArticlce';
 import Award from './AdminAward';
+import Testimonial from './AdminTestimonials';
 
 const Admin = () => {
   useEffect(() => {
@@ -59,6 +60,11 @@ const Admin = () => {
       key: '7',
       label: 'Awards',
       children: <Award />,
+    },
+    {
+      key: '8',
+      label: 'Testimonials',
+      children: <Testimonial />,
     },
   ];
 
