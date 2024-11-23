@@ -24,9 +24,9 @@ app.get("/", (req, res) => {
 });
 
 // Serve React frontend for non-API routes
-app.use(express.static(path.join(__dirname, "../frontend/build"))); // Adjust path if needed
+app.use(express.static(path.join(__dirname, "build"))); // Adjust path if needed
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 
 // Start the server
