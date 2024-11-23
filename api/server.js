@@ -21,7 +21,7 @@ app.use(express.json());
 
 // Routes
 const portfolioRoute = require("./routes/portfolioRoute");
-app.use("/api/portfolio", portfolioRoute);
+app.use("https://dinith-edirisinghe.onrender.com/api/portfolio", portfolioRoute);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server!");
