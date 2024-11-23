@@ -1,5 +1,6 @@
 const express = require("express");
-const cors = require("cors"); // Import CORS
+const cors = require("cors");
+const path = require("path");
 const app = express();
 const port = process.env.PORT || 10000;
 
@@ -9,23 +10,26 @@ require("dotenv").config();
 // Import database configuration
 const dbConfig = require("./config/dbConfig");
 
-// Set up CORS to allow requests only from your frontend URL
-const corsOptions = {
-  origin: "https://dinith-edirisinghe.onrender.com", // Frontend URL
-  optionsSuccessStatus: 200, // For older browsers compatibility
-};
-app.use(cors(corsOptions)); // Apply CORS middleware
-
-// Middleware to parse JSON
-app.use(express.json());
+// Middleware
+app.use(cors({ origin: "https://dinith-edirisinghe.onrender.com", optionsSuccessStatus: 200 })); // Allow frontend URL
+app.use(express.json()); // Parse JSON payloads
 
 // Routes
 const portfolioRoute = require("./routes/portfolioRoute");
 app.use("/api/portfolio", portfolioRoute);
 
+// Default route for API testing
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server!");
 });
 
-// Set up the server
-app.listen(port, () => console.log(`Server started at port ${port}`));
+// Serve React frontend for non-API routes
+app.use(express.static(path.join(__dirname, "../frontend/build"))); // Adjust path if needed
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../frontend/build", "index.html"));
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server started at port ${port}`);
+});
