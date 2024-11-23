@@ -34,9 +34,9 @@ router.get("/get-portfolio-data", async (req, res) => {
     }
 });
 
-
+//hey test
 //update intro
-router.post("https://newww-mern-portfolio-backend.onrender.com/api/portfolio/api/portfolio/update-intro", async (req, res) => {
+router.post("https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-intro", async (req, res) => {
   console.log("Incoming request data:", req.body); // Log incoming data
   try {
       const intro = await Intro.findOneAndUpdate(
