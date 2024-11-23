@@ -56,7 +56,7 @@ const AdminSkills = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-skills', { skills: values.skills });
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-skills', { skills: values.skills });
       dispatch(HideLoading());
 
       if (response.data.success) {

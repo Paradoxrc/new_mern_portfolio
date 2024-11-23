@@ -54,7 +54,7 @@ const AdminArticles = () => {
   const fetchArticles = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.get('/api/portfolio/get-articles');
+      const response = await axios.get('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/get-articles');
       if (response.data.length > 0) {
         // Set form values if articles exist
         form.setFieldsValue({

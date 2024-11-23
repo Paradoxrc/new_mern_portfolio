@@ -68,7 +68,7 @@ const AdminEducation = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-education', { education: values.education });
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-education', { education: values.education });
       dispatch(HideLoading());
 
       if (response.data.success) {

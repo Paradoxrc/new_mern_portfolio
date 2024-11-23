@@ -73,7 +73,7 @@ const AdminExperience = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-experience', {
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-experience', {
         experiences: values.experiences,
         deletedExperiences, // Send the deleted experiences to the server
       });

@@ -69,7 +69,7 @@ const AdminProjects = () => {
       console.log('Deleted projects:', deletedProjects);
 
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-projects', {
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-projects', {
         projects: updatedProjects,
         deletedProjects,
       });

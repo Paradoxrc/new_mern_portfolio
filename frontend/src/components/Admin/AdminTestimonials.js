@@ -74,7 +74,7 @@ const AdminTestimonials = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-testimonials', {
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-testimonials', {
         testimonials: values.testimonials,
         deletedTestimonials, // Send the deleted testimonials to the server
       });

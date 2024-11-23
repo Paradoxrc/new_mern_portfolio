@@ -75,7 +75,7 @@ const AdminAwards = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-awards', { awards: values.awards });
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-awards', { awards: values.awards });
       dispatch(HideLoading());
 
       if (response.data.success) {
