@@ -45,7 +45,7 @@ const AdminIntro = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('/api/portfolio/update-intro', {
+      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/api/portfolio/update-intro', {
         ...values,
         _id: portfolioData.intro._id,
       });
