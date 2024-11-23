@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import ClientSlider from './ClientSlider';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { Zoom } from 'react-awesome-reveal';
+import { useSelector } from 'react-redux';
 
 let clients = [
     {
@@ -76,9 +77,23 @@ const settings = {
     ]
 };
 
+
 const Clients = () => {
+
+    const { portfolioData } = useSelector((state) => state.root);
+
+const testimonials = portfolioData?.testimonial?.length > 0 ? portfolioData.testimonial : [
+    { name: "John Michel",
+        position: "web developer",
+        img_url: "https://t4.ftcdn.net/jpg/02/90/27/39/360_F_290273933_ukYZjDv8nqgpOBcBUo5CQyFcxAzYlZRW.jpgs",
+        stars: 3,
+        disc: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
+        Temporibus consequuntur dolores labore natus similique nemo doloribus cum accusantium adipisci maiores.`},
+   
+  ];
+
     const arrowRef = useRef(null);
-    let clientDisc = clients.map((item, i) => (
+    let clientDisc = testimonials.map((item, i) => (
         <CardWrapper key={i}>
             <ClientSlider item={item} />
         </CardWrapper>
