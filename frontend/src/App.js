@@ -51,7 +51,7 @@ function App() {
   const getPortfolioData = async () => {
     try {
       dispatch(ShowLoading()); // Show loader while fetching
-      const response = await axios.get('/api/portfolio/get-portfolio-data');
+      const response = await axios.get('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/get-portfolio-data');
       dispatch(SetPortfolioData(response.data));
       dispatch(HideLoading()); // Hide loader after data is fetched
     } catch (error) {
