@@ -93,14 +93,14 @@ function App() {
                   
                   <Contact />
                 </Wrapper>
-                <Footer />
+                <Footer />https://dinith-edirisinghe.onrender.com
                 {openModal.state && <ProjectDetails openModal={openModal} setOpenModal={setOpenModal} />}
               </Body>
             } 
           />
           {/* Admin route */}
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin-login" element={<Login />} />
+          <Route path="https://dinith-edirisinghe.onrender.com/admin" element={<Admin />} />
+          <Route path="https://dinith-edirisinghe.onrender.com/admin-login" element={<Login />} />
         </Routes>
       </Router>
     </ThemeProvider>
