@@ -5,7 +5,7 @@ const User = require("../models/userModel"); // Ensure this path is correct
 
 
 //get all portfolio data
-router.get("/get-portfolio-data", async (req, res) => {
+router.get("https://newww-mern-portfolio-backend.onrender.com/get-portfolio-data", async (req, res) => {
     try {
         const intros = await Intro.find();
         const skills = await Skill.find();
