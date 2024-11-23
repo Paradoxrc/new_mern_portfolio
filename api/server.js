@@ -14,5 +14,9 @@ app.use(express.json());
 
 app.use("/api/portfolio", portfolioRoute);
 
+app.get("/", (req, res) => {
+    res.send("Welcome to the backend server!");
+  });
+
 // Set up the server
-app.listen(port, () => console.log("Server started at port 5000"));
+app.listen(port, () => console.log("Server started at port 10000"));

@@ -299,6 +299,11 @@ router.post("/admin-login", async (req, res) => {
     });
   }
 });
+
+router.get("/", (req, res) => {
+  res.json({ message: "Portfolio route works!" });
+});
+
 router.post("/update-testimonials", async (req, res) => {
   try {
     const updatedTestimonials = req.body.testimonials; // Array of updated testimonials
