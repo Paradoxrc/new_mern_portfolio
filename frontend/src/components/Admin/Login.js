@@ -18,6 +18,7 @@ const LoginPage = () => {
             console.log("User data being sent:", user);
     
             const response = await axios.post('/api/portfolio/admin-login', user);
+            console.log("API response:", response.data);
             dispatch(HideLoading());
     
             if (response.data.success) {
