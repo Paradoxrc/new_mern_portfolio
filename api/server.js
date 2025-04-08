@@ -22,7 +22,7 @@ app.use("/api/portfolio", portfolioRoute);
 app.get("/", (req, res) => {
   res.send("Welcome to the backend server!");
 });
-
+//
 // Serve React frontend for non-API routes
 app.use(express.static(path.join(__dirname, "build"))); // Adjust path if needed
 app.get("*", (req, res) => {

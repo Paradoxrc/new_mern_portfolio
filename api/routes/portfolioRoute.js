@@ -213,7 +213,7 @@ router.post("/update-experience", async (req, res) => {
       console.error('Error fetching articles:', error);
       res.status(400).send(error);
     }
-  });
+  }); 
 
   router.post('/update-articles', async (req, res) => {
     try {
