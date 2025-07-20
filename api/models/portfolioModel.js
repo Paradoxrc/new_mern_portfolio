@@ -14,6 +14,10 @@ const introSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    profileImage:{
+        type: String,
+        required: false // Optional field for profile picture
+    },
     github:{
         type: String,
         required: true

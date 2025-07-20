@@ -51,11 +51,20 @@ function App() {
   const getPortfolioData = async () => {
     try {
       dispatch(ShowLoading()); // Show loader while fetching
-      const response = await axios.get('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/get-portfolio-data');
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.get('https://dinith-edirisinghe.onrender.com/api/portfolio/get-portfolio-data');
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.get('http://localhost:10000/api/portfolio/get-portfolio-data');
+      }
+      console.log('Portfolio data received:', response.data); // Debug log
       dispatch(SetPortfolioData(response.data));
       dispatch(HideLoading()); // Hide loader after data is fetched
     } catch (error) {
-      console.log(error);
+      console.error('Error fetching portfolio data:', error);
+      console.error('Error details:', error.response?.data || error.message);
       dispatch(HideLoading()); // Hide loader in case of an error
     }
   };

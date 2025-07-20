@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
 import axios from 'axios';
 import styled from 'styled-components';
+import ImageUpload from './ImageUpload';
 
 const Container = styled.div`
   padding: 20px;
@@ -75,7 +76,14 @@ const AdminAwards = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-awards', { awards: values.awards });
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-awards', { awards: values.awards });
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.post('http://localhost:10000/api/portfolio/update-awards', { awards: values.awards });
+      }
       dispatch(HideLoading());
 
       if (response.data.success) {
@@ -121,10 +129,10 @@ const AdminAwards = () => {
 
                       <Form.Item
                         name={[name, 'img']}
-                        label="Image URL"
-                        rules={[{ required: true, message: 'Please input the image URL' }]}
+                        label="Award Image"
+                        rules={[{ required: true, message: 'Please upload an award image' }]}
                       >
-                        <Input placeholder="Enter image URL" />
+                        <ImageUpload placeholder="Upload award image" />
                       </Form.Item>
 
                       <RemoveButton onClick={() => confirmDelete(remove, name)}>

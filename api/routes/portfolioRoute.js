@@ -7,6 +7,8 @@ const User = require("../models/userModel"); // Ensure this path is correct
 //get all portfolio data
 router.get("/get-portfolio-data", async (req, res) => {
     try {
+        console.log("Fetching portfolio data from database...");
+        
         const intros = await Intro.find();
         const skills = await Skill.find();
         const projects = await Project.find();
@@ -16,9 +18,18 @@ router.get("/get-portfolio-data", async (req, res) => {
         const awards = await Award.find();
         const testimonials = await Testimonial.find();
 
-       
+        console.log("Data counts:", {
+            intros: intros.length,
+            skills: skills.length,
+            projects: projects.length,
+            educations: educations.length,
+            experiences: experiences.length,
+            articles: articles.length,
+            awards: awards.length,
+            testimonials: testimonials.length
+        });
 
-        res.status(200).send({
+        const responseData = {
             intro: intros[0], // Adjust as needed
             skill: skills,
             project: projects,
@@ -27,10 +38,13 @@ router.get("/get-portfolio-data", async (req, res) => {
             article: articles || [], 
             award: awards || [], 
             testimonial: testimonials || [],
-        });
+        };
+
+        console.log("Sending response data successfully");
+        res.status(200).send(responseData);
     } catch (error) {
         console.error("Error fetching portfolio data:", error);
-        res.status(400).send(error);
+        res.status(500).send({ error: error.message, success: false });
     }
 });
 
@@ -277,10 +291,17 @@ router.post("/admin-login", async (req, res) => {
     // Attempt to find the user
     const user = await User.findOne({ username: req.body.username, password: req.body.password });
     console.log("User found:", user); // Log the user result
-    user.password = "";
+    
     if (user) {
+      // Create a response object without the password
+      const userResponse = {
+        _id: user._id,
+        username: user.username,
+        // Add other fields you want to return, but not password
+      };
+      
       res.status(200).send({
-        data: user,
+        data: userResponse,
         success: true,
         message: "User logged in successfully", // Or "Admin logged in successfully"
       });

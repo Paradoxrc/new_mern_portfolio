@@ -166,6 +166,33 @@ export const SubTitle = styled.div`
   }
 `;
 
+// New Trusted by Fiverr components
+export const TrustedByContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  gap: 12px;
+  
+  @media (max-width: 960px) {
+    justify-content: center;
+  }
+`;
+
+export const TrustedByText = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.text_secondary};
+`;
+
+export const FiverrLogo = styled.img`
+  height: 30px;
+  transition: all 0.3s ease-in-out;
+  
+  &:hover {
+    transform: scale(1.05);
+  }
+`;
+
 export const ResumeButton = styled.a`
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -185,8 +212,6 @@ background: hsla(219, 86%, 51%, 1);
 background: linear-gradient(225deg, hsla(219, 86%, 51%, 1) 0%, hsla(225, 72%, 65%, 1) 100%);
 background: -moz-linear-gradient(225deg, hsla(219, 86%, 51%, 1) 0%, hsla(225, 72%, 65%, 1) 100%);
 background: -webkit-linear-gradient(225deg, hsla(219, 86%, 51%, 1) 0%, hsla(225, 72%, 65%, 1) 100%);
-
-
 
 &:hover {
     transform: scale(1.05);

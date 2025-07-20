@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
 import axios from 'axios';
 import styled from 'styled-components';
+import ImageUpload from './ImageUpload';
 
 const Container = styled.div`
   padding: 20px;
@@ -69,10 +70,20 @@ const AdminProjects = () => {
       console.log('Deleted projects:', deletedProjects);
 
       dispatch(ShowLoading());
-      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-projects', {
-        projects: updatedProjects,
-        deletedProjects,
-      });
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-projects', {
+          projects: updatedProjects,
+          deletedProjects,
+        });
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.post('http://localhost:10000/api/portfolio/update-projects', {
+          projects: updatedProjects,
+          deletedProjects,
+        });
+      }
       dispatch(HideLoading());
 
       if (response.data.success) {
@@ -145,10 +156,12 @@ const AdminProjects = () => {
 
                       <Form.Item
                         name={[fieldName, 'image']}
-                        label="Project Image URL"
-                        rules={[{ required: true, message: 'Please input the image URL' }]}
+                        label="Project Image"
+                        rules={[{ required: true, message: 'Please upload a project image' }]}
                       >
-                        <Input placeholder="Enter image URL" />
+                        <ImageUpload
+                          placeholder="Upload project image"
+                        />
                       </Form.Item>
 
                       <Form.Item
@@ -230,10 +243,12 @@ const AdminProjects = () => {
 
                                 <Form.Item
                                   name={[memberName, 'img']}
-                                  label="Member Image URL"
-                                  rules={[{ required: false, message: 'Please input the image URL' }]}
+                                  label="Member Image"
+                                  rules={[{ required: false }]}
                                 >
-                                  <Input placeholder="Enter member image URL" />
+                                  <ImageUpload
+                                    placeholder="Upload member image (optional)"
+                                  />
                                 </Form.Item>
 
                                 <Form.Item

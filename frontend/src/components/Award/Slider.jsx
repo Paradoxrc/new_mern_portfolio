@@ -7,36 +7,34 @@ import { useSelector } from 'react-redux';
 
 const settings = {
     centerMode: true,
-    centerPadding: '60px',
-    dots: false,
+    centerPadding: '40px',
+    dots: true,
     infinite: true,
-    speed: 500,
+    speed: 600,
     slidesToShow: 3,
     slidesToScroll: 1,
     initialSlide: 0,
     arrows: false,
     autoplay: true, 
-    autoplaySpeed: 2000,
+    autoplaySpeed: 3000,
+    pauseOnHover: true,
     responsive: [
         {
-            breakpoint: 990,
+            breakpoint: 1200,
             settings: {
-                slidesToShow: 3,
+                slidesToShow: 2,
                 slidesToScroll: 1,
-                infinite: true,
-                dots: false,
-                centerMode: false,
-                centerPadding: '0'
+                centerMode: true,
+                centerPadding: '60px'
             }
         },
         {
-            breakpoint: 600,
+            breakpoint: 768,
             settings: {
                 slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 2,
+                slidesToScroll: 1,
                 centerMode: false,
-                centerPadding: '0'
+                centerPadding: '20px'
             }
         },
         {
@@ -45,7 +43,7 @@ const settings = {
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 centerMode: false,
-                centerPadding: '0'
+                centerPadding: '40px'
             }
         }
     ]
@@ -81,42 +79,89 @@ export default SliderComp;
 
 const Container = styled.div`
     position: relative;
+    padding: 2rem 0;
     
     .slick-slide {
-        padding: 0 100px;
+        padding: 0 20px;
+        
+        > div {
+            margin: 0 auto;
+        }
     }
-
+    
     .slick-list {
-        margin: 0 -100px;
+        margin: 0 -20px;
+        overflow: visible;
+    }
+    
+    .slick-center {
+        transform: scale(1.05);
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+    
+    .slick-dots {
+        bottom: -60px;
+        
+        li button:before {
+            color: ${({ theme }) => theme.primary || '#667eea'};
+            font-size: 12px;
+            opacity: 0.5;
+        }
+        
+        li.slick-active button:before {
+            opacity: 1;
+            color: ${({ theme }) => theme.primary || '#667eea'};
+        }
     }
 
     @media (max-width: 990px) {
         .slick-slide {
-            padding: 0 50px;
+            padding: 0 15px;
         }
 
         .slick-list {
-            margin: 0 -50px;
+            margin: 0 -15px;
+        }
+        
+        .slick-center {
+            transform: scale(1.03);
         }
     }
 
     @media (max-width: 600px) {
-        .slick-slide {
-            padding: 0 20px;
-        }
-
-        .slick-list {
-            margin: 0 -20px;
-        }
-    }
-
-    @media (max-width: 480px) {
+        padding: 1rem 0;
+        
         .slick-slide {
             padding: 0 10px;
         }
 
         .slick-list {
             margin: 0 -10px;
+        }
+        
+        .slick-center {
+            transform: scale(1.02);
+        }
+        
+        .slick-dots {
+            bottom: -40px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 0.5rem 0;
+        
+        .slick-slide {
+            padding: 0 5px;
+        }
+
+        .slick-list {
+            margin: 0 -5px;
+        }
+        
+        .slick-center {
+            transform: none;
         }
     }
 `;

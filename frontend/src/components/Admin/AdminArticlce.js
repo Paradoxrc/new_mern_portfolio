@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
 import axios from 'axios';
 import styled from 'styled-components';
+import ImageUpload from './ImageUpload';
 
 const Container = styled.div`
   padding: 20px;
@@ -54,7 +55,14 @@ const AdminArticles = () => {
   const fetchArticles = async () => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.get('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/get-articles');
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.get('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/get-articles');
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.get('http://localhost:10000/api/portfolio/get-articles');
+      }
       if (response.data.length > 0) {
         // Set form values if articles exist
         form.setFieldsValue({
@@ -136,10 +144,10 @@ const AdminArticles = () => {
 
                       <Form.Item
                         name={[name, 'img']} // Change from 'imageUrl' to 'img'
-                        label="Image URL"
-                        rules={[{ required: true, message: 'Please input the image URL' }]}
+                        label="Article Image"
+                        rules={[{ required: true, message: 'Please upload an article image' }]}
                       >
-                        <Input placeholder="Enter image URL" />
+                        <ImageUpload placeholder="Upload article image" />
                       </Form.Item>
 
                       <RemoveButton onClick={() => confirmDelete(remove, name)}>

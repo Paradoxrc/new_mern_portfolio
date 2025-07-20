@@ -1,133 +1,229 @@
 import React from 'react';
 import styled from 'styled-components';
 import { IoIosQuote } from "react-icons/io";
-import { AiOutlineStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 const ClientSlider = (props) => {
     const { name, position, img, stars, desc } = props.item;
    
+    const renderStars = () => {
+        const starArray = [];
+        for (let i = 0; i < 5; i++) {
+            if (i < stars) {
+                starArray.push(<AiFillStar key={i} className="star filled" />);
+            } else {
+                starArray.push(<AiOutlineStar key={i} className="star empty" />);
+            }
+        }
+        return starArray;
+    };
 
     return (
-        
         <Container>
-            <Header>
-                <span className='quote'><IoIosQuote /></span>
-                <div>
-                    {Array(stars).fill().map((_, i) => (
-                        <span className='star' key={i}>
-                            <AiOutlineStar />
-                        </span>
-                    ))}
-                </div>
-            </Header>
-            <Desc>
-                {desc}
-            </Desc>
-            <Footer>
-                <img src={img} alt={name} />
-                <div className="details">
-                    <h1>{name}</h1>
-                    <p>{position}</p>
-                </div>
-            </Footer>
+            <QuoteSection>
+                <QuoteIcon>
+                    <IoIosQuote />
+                </QuoteIcon>
+                <StarRating>
+                    {renderStars()}
+                </StarRating>
+            </QuoteSection>
+            
+            <TestimonialText>
+                "{desc}"
+            </TestimonialText>
+            
+            <ClientInfo>
+                <AvatarSection>
+                    <Avatar src={img} alt={name} />
+                </AvatarSection>
+                <ClientDetails>
+                    <ClientName>{name}</ClientName>
+                    <ClientPosition>{position}</ClientPosition>
+                </ClientDetails>
+            </ClientInfo>
+            
+            <GradientBorder />
         </Container>
-       
     );
 }
 
 export default ClientSlider;
 
 const Container = styled.div`
-    background: linear-gradient(159deg, rgb(45, 45, 58) 0%, rgb(43, 43, 53) 100%);
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
     padding: 2rem;
-    margin: 0 1rem;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 100%; /* Ensures it doesn't exceed parent width */
-    width: 100%; /* Full width of the parent */
+    margin: 0 10px;
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
 
-    .slick-slide {
-        padding: 0 20px; /* Adjusted padding to prevent overflow */
-    }
-
-    .slick-list {
-        margin: 0;
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        border-color: rgba(103, 126, 234, 0.3);
     }
 
     @media (max-width: 768px) {
         padding: 1.5rem;
+        height: 320px;
+        margin: 0 5px;
+    }
+
+    @media (max-width: 480px) {
+        padding: 1.2rem;
+        height: 300px;
     }
 `;
 
-const Header = styled.div`
+const QuoteSection = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    .quote {
-        font-size: 3rem;
-        color: #6699ff;
-        opacity: 0.7;
-    }
-
-    .star {
-        color: #6699ff;
-        font-size: 1.3rem;
-    }
+    margin-bottom: 1rem;
 `;
 
-const Desc = styled.p`
-    font-size: 1rem;
-    color: ${({ theme }) => theme.text_secondary};
-    max-width: 100%; /* Prevents text from overflowing */
-    word-wrap: break-word; /* Ensures long words break correctly */
-    margin: 1rem auto;
-    padding: 1rem 0;
+const QuoteIcon = styled.div`
+    font-size: 3rem;
+    color: #667eea;
+    opacity: 0.6;
+    line-height: 1;
+`;
+
+const StarRating = styled.div`
+    display: flex;
+    gap: 2px;
     
-    @media (max-width: 500px) {
-        width: 100%; /* Adjust width for small screens */
-        font-size: 0.9rem;
+    .star {
+        font-size: 1.2rem;
+        
+        &.filled {
+            color: #ffd700;
+        }
+        
+        &.empty {
+            color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .star {
+            font-size: 1rem;
+        }
     }
 `;
 
-const Footer = styled.div`
+const TestimonialText = styled.p`
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin: 1rem 0 1.5rem 0;
+    flex: 1;
+    font-style: italic;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    @media (max-width: 768px) {
+        font-size: 0.9rem;
+        margin: 0.8rem 0 1.2rem 0;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 0.85rem;
+        margin: 0.6rem 0 1rem 0;
+    }
+`;
+
+const ClientInfo = styled.div`
     display: flex;
     align-items: center;
     gap: 1rem;
-    flex-wrap: wrap; /* Allows items to wrap if needed */
+    margin-top: auto;
+`;
 
-    img {
-        width: 4rem;
-        height: 4rem;
-        border-radius: 50%;
-        object-fit: cover;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+const AvatarSection = styled.div`
+    position: relative;
+`;
+
+const Avatar = styled.img`
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid transparent;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 2px;
+    transition: all 0.3s ease;
+
+    ${Container}:hover & {
+        transform: scale(1.1);
+        box-shadow: 0 8px 20px rgba(103, 126, 234, 0.4);
     }
 
-    .details {
-        h1 {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
+    @media (max-width: 768px) {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
 
-            @media (max-width: 580px) {
-                font-size: 1rem;
-            }
+    @media (max-width: 480px) {
+        width: 3rem;
+        height: 3rem;
+    }
+`;
 
-            @media (max-width: 538px) {
-                font-size: 0.9rem;
-            }
-        }
+const ClientDetails = styled.div`
+    flex: 1;
+    text-align: left;
+`;
 
-        p {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.5);
-            margin: 0;
+const ClientName = styled.h3`
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 0.3rem 0;
+    line-height: 1.2;
 
-            @media (max-width: 538px) {
-                font-size: 0.6rem;
-            }
-        }
+    @media (max-width: 768px) {
+        font-size: 1rem;
+    }
+
+    @media (max-width: 480px) {
+        font-size: 0.95rem;
+    }
+`;
+
+const ClientPosition = styled.p`
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+    text-transform: capitalize;
+    font-weight: 400;
+
+    @media (max-width: 480px) {
+        font-size: 0.8rem;
+    }
+`;
+
+const GradientBorder = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+
+    ${Container}:hover & {
+        opacity: 1;
     }
 `;

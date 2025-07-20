@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { Form, Input, Button, message, Collapse, Modal } from 'antd';
+import { Form, Input, Button, message, Modal, Collapse } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
 import axios from 'axios';
 import styled from 'styled-components';
+import ImageUpload from './ImageUpload';
 
 const Container = styled.div`
   padding: 20px;
@@ -56,7 +57,14 @@ const AdminSkills = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-skills', { skills: values.skills });
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-skills', { skills: values.skills });
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.post('http://localhost:10000/api/portfolio/update-skills', { skills: values.skills });
+      }
       dispatch(HideLoading());
 
       if (response.data.success) {
@@ -117,10 +125,12 @@ const AdminSkills = () => {
                                 <Form.Item
                                   {...subField}
                                   name={[subField.name, 'image']}
-                                  label={`Skill Image URL ${index + 1}`}
-                                  rules={[{ required: true, message: 'Please input the image URL' }]}
+                                  label={`Skill Icon ${index + 1}`}
+                                  rules={[{ required: true, message: 'Please upload a skill icon' }]}
                                 >
-                                  <Input placeholder="Enter image URL" />
+                                  <ImageUpload
+                                    placeholder="Upload skill icon"
+                                  />
                                 </Form.Item>
 
                                 <RemoveButton onClick={() => confirmDelete(removeSubField, subField.name)}>

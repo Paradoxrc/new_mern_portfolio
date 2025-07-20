@@ -11,12 +11,18 @@ require("dotenv").config();
 const dbConfig = require("./config/dbConfig");
 
 // Middleware
-app.use(cors({ origin: "https://dinith-edirisinghe.onrender.com", optionsSuccessStatus: 200 })); // Allow frontend URL
+app.use(cors({ 
+  origin: ["http://localhost:3000", "http://newww-mern-portfolio-backend.onrender.com"], 
+  optionsSuccessStatus: 200 
+})); // Allow frontend URLs
 app.use(express.json()); // Parse JSON payloads
 
 // Routes
 const portfolioRoute = require("./routes/portfolioRoute");
+const uploadRoute = require("./routes/uploadRouteCloudinary");
+
 app.use("/api/portfolio", portfolioRoute);
+app.use("/api/upload", uploadRoute);
 
 // Default route for API testing
 app.get("/", (req, res) => {

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
 import axios from 'axios';
 import styled from 'styled-components';
+import ImageUpload from './ImageUpload';
 
 const Container = styled.div`
   padding: 20px;
@@ -73,10 +74,20 @@ const AdminExperience = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-experience', {
-        experiences: values.experiences,
-        deletedExperiences, // Send the deleted experiences to the server
-      });
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-experience', {
+          experiences: values.experiences,
+          deletedExperiences, // Send the deleted experiences to the server
+        });
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.post('http://localhost:10000/api/portfolio/update-experience', {
+          experiences: values.experiences,
+          deletedExperiences, // Send the deleted experiences to the server
+        });
+      }
       dispatch(HideLoading());
 
       if (response.data.success) {
@@ -138,10 +149,10 @@ const AdminExperience = () => {
                   <Form.Item
                     {...restField}
                     name={[name, 'img']}
-                    label="Image URL"
-                    rules={[{ required: true, message: 'Please input the image URL' }]}
+                    label="Company Logo"
+                    rules={[{ required: true, message: 'Please upload a company logo' }]}
                   >
-                    <Input placeholder="Enter image URL" />
+                    <ImageUpload placeholder="Upload company logo" />
                   </Form.Item>
 
                   {/* Skills Section */}

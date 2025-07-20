@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { ShowLoading, HideLoading } from '../../redux/rootSlice';
 import axios from 'axios';
 import styled from 'styled-components';
+import ImageUpload from './ImageUpload';
 
 const Container = styled.div`
   padding: 20px;
@@ -50,8 +51,8 @@ const AdminTestimonials = () => {
 
   useEffect(() => {
     console.log('portfolioData:', portfolioData);
-    if (portfolioData?.testimonials) {
-      form.setFieldsValue({ testimonials: portfolioData.testimonials });
+    if (portfolioData?.testimonial) {  // Changed from testimonials to testimonial
+      form.setFieldsValue({ testimonials: portfolioData.testimonial });
     }
   }, [portfolioData, form]);
 
@@ -74,10 +75,20 @@ const AdminTestimonials = () => {
   const onFinish = async (values) => {
     try {
       dispatch(ShowLoading());
-      const response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-testimonials', {
-        testimonials: values.testimonials,
-        deletedTestimonials, // Send the deleted testimonials to the server
-      });
+      // Try production server first, fallback to localhost if it fails
+      let response;
+      try {
+        response = await axios.post('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/update-testimonials', {
+          testimonials: values.testimonials,
+          deletedTestimonials, // Send the deleted testimonials to the server
+        });
+      } catch (primaryError) {
+        console.warn('Production server failed, trying localhost fallback...');
+        response = await axios.post('http://localhost:10000/api/portfolio/update-testimonials', {
+          testimonials: values.testimonials,
+          deletedTestimonials, // Send the deleted testimonials to the server
+        });
+      }
       dispatch(HideLoading());
 
       if (response.data.success) {
@@ -137,10 +148,10 @@ const AdminTestimonials = () => {
                   <Form.Item
                     {...restField}
                     name={[name, 'img']}
-                    label="Image URL"
-                    rules={[{ required: true, message: 'Please input the image URL' }]}
+                    label="Profile Image"
+                    rules={[{ required: true, message: 'Please upload a profile image' }]}
                   >
-                    <Input placeholder="Enter image URL" />
+                    <ImageUpload placeholder="Upload profile image" />
                   </Form.Item>
 
                   <RemoveButton
