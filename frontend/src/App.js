@@ -54,7 +54,7 @@ function App() {
       // Try production server first, fallback to localhost if it fails
       let response;
       try {
-        response = await axios.get('https://dinith-edirisinghe.onrender.com/api/portfolio/get-portfolio-data');
+        response = await axios.get('https://newww-mern-portfolio-backend.onrender.com/api/portfolio/get-portfolio-data');
       } catch (primaryError) {
         console.warn('Production server failed, trying localhost fallback...');
         response = await axios.get('http://localhost:10000/api/portfolio/get-portfolio-data');
