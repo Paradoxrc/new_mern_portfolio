@@ -12,8 +12,15 @@ const dbConfig = require("./config/dbConfig");
 
 // Middleware
 app.use(cors({ 
-  origin: ["http://localhost:3000", "http://newww-mern-portfolio-backend.onrender.com"], 
-  optionsSuccessStatus: 200 
+  origin: [
+    "http://localhost:3000", 
+    "https://dinith-edirisinghe.onrender.com",
+    "https://newww-mern-portfolio-backend.onrender.com"
+  ], 
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 })); // Allow frontend URLs
 app.use(express.json()); // Parse JSON payloads
 
@@ -26,7 +33,12 @@ app.use("/api/upload", uploadRoute);
 
 // Default route for API testing
 app.get("/", (req, res) => {
-  res.send("Welcome to the backend server!");
+  res.json({ 
+    message: "Welcome to the backend server!", 
+    status: "running",
+    timestamp: new Date().toISOString(),
+    cors: "enabled for dinith-edirisinghe.onrender.com"
+  });
 });
 //
 // Serve React frontend for non-API routes
@@ -37,5 +49,7 @@ app.get("*", (req, res) => {
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server started at port ${port}`);
+  console.log(`🚀 Server started at port ${port}`);
+  console.log(`🌍 CORS enabled for: localhost:3000, dinith-edirisinghe.onrender.com`);
+  console.log(`📊 MongoDB: ${process.env.MONGO_URL ? 'Connected' : 'Not configured'}`);
 });
